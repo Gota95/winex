@@ -67,15 +67,13 @@ class CarnetController extends Controller
 
   public function print(Request $request, $id)
   {
-      // $contrato = Contratos::find($id);
-      $receta=DB::table('receta as rec')
-      ->join('paciente as pac', 'rec.paciente_id','=','pac.id')
-      ->join('medicamento as med', 'rec.medicamento_id','=','med.id')
-      ->join('doctor as doc', 'rec.doctor_id','=','doc.id')
-      ->select('rec.indicaciones', 'rec.fecha', DB::raw('pac.nombre as nombre_paciente'),DB::raw('pac.apellido as apellido_paciente'), DB::raw('med.nombre as medicamento'))
-      ->where('rec.id','=',$id)->first();
+      $carnet=DB::table('carnet as cat')
+      ->join('estudiante as est', 'cat.estudiante_id','=','est.id')
+      ->join('seccion as sec', 'cat.seccion_id','=','sec.id')
+      ->select('cat.id','cat.numerocarnet','codigo_qr',DB::raw('est.nombres as nombres_estudiante'),DB::raw('est.apellidos as apellidos_estudiante'), DB::raw('sec.seccion as seccion_alumno'))
+      ->where('est.id','=',$id)->first();
 
-      $pdf = PDF::loadView('recetas.print', compact('receta'))->setPaper('oficio', 'portrait')->setWarnings(false)->save('receta.pdf');
-      return $pdf->stream('receta.pdf');
+      $pdf = PDF::loadView('carnet.print', compact('carnet'))->setPaper('plantilla', 'portrait')->setWarnings(false)->save('carnet.pdf');
+      return $pdf->stream('carnet.pdf');
   }
 }

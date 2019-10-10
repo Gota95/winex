@@ -72,6 +72,7 @@ Route::resource('telegram','MensajeriaController');
 Route::resource('carnet','CarnetController');
 Route::get('carnet/{id}', 'CarnetController@print');
 
+
 //RUTAS DE MODULO DE PAGOS
 Route::resource('pago','PagoController');
 

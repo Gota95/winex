@@ -2,7 +2,7 @@
 @section('contenido')
 <div class="row">
 	<div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-		<h3>Carnet <a href="carnet/create"><button class="btn btn-success">Nuevo</button></h3></a>
+		<h3>Carnet <a href="carnet/create"><button class="btn btn-success">Nuevo</button></a></h3>
 		<br>
 		@include('carnet.search')
 	</div>
@@ -39,6 +39,10 @@
 
 							<a href="" data-target="#modal-delete-{{$car->id}}" data-toggle="modal">
 								<button class="btn btn-danger fa  fa-trash-o"></button>
+							</a>
+
+							<a href="{{URL::action('CarnetController@print',$car->id)}}">
+								<button class="btn btn-primary fa fa-gg"></button>
 							</a>
 						</td>
 					</tr>

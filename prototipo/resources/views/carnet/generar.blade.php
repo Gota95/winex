@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Receta del Paciente: {{$receta->nombre_paciente.' '.$receta->apellido_paciente}}</title>
+        <title>Receta del Paciente: {{$carnet->nombres_estudiante.' '.$carnet->apellidos_estudiante}}</title>
         <link href="styles.css" rel="stylesheet" type="text/css">
 
         <style type="text/css">
@@ -126,15 +126,15 @@
             <div id="Rectnguloredondeado1"><img src="images/Rectnguloredondeado1.png"></div>
             <div id="Capa1"><img src="images/Capa1.png"></div>
             <div id="Nombre">
-              <SPAN style="position: absolute; top: -6 px; left: 100 px;">{{$receta->nombre_paciente.' '.$receta->apellido_paciente}}</span>
+              <SPAN style="position: absolute; top: -6 px; left: 100 px;">{{$carnet->nombres_estudiante.' '.$carnet->apellidos_estudiante}}</span>
               <SPAN style="position: absolute; top: 27 px; left: 100 px;">San Lorenzo</span>
-              <SPAN style="position: absolute; top: 61 px; left: 100 px;">{{$receta->fecha}}</span>
+              <SPAN style="position: absolute; top: 61 px; left: 100 px;">{{$carnet->numerocarnet}}</span>
               <img src="images/Nombre.png">
             </div>
             <div id="Firma"><img src="images/Firma.png"></div>
             <div id="Rp">
-              <SPAN style="position: absolute; top: 0 px; left: 100 px;">{{$receta->medicamento}}</span>
-              <p style="position: absolute; top: 10 px; left: 100 px;">{{$receta->indicaciones}}</p>
+              <SPAN style="position: absolute; top: 0 px; left: 100 px;">{{$carnet->seccion_estudiante}}</span>
+              <p style="position: absolute; top: 10 px; left: 100 px;">{{$carnet->codigo_qr}}</p>
               <img src="images/Rp.png">
             </div>
         </div>
