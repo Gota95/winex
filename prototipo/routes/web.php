@@ -80,3 +80,6 @@ Route::resource('pago','PagoController');
 //RUTAS DE MODULO DE ACTIVIDAD
 Route::resource('cursos/actividad','ActividadController');
 Route::resource('calendario','CalendarioController');
+
+//RUTAS DE MODULO DE Anexos
+Route::resource('laminas','LaminaController');

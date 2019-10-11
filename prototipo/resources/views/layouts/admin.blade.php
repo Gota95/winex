@@ -185,6 +185,14 @@
                     </li>
                     @endif
 
+                    @if(Auth::user()->rol == "admin" || Auth::user()->rol == "director")
+                    <li class="menu-item-has-children dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-unlock"></i>Anexos</a>
+                        <ul class="sub-menu children dropdown-menu">
+                            <li><i class="menu-icon fa fa-users"></i><a href="{{url('laminas/')}}">Laminas</a></li>
+                        </ul>
+                    </li>
+                    @endif
 
 
                     <li class="active">
