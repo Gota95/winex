@@ -52,7 +52,20 @@ class LaminaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $lamina=new Lamina;
+      $lamina->id=$request->get('id');
+      $lamina->nombre=$request->get('nombre');
+      if(Input::hasFile('lamina')){
+        $file=Input::file('lamina');
+        $file->move(public_path().'/imagenes/laminas/',$file->getClientOriginalName());
+        $lamina->lamina=$file->getClientOriginalName();
+      }
+      $lamina->descripcion=$request->get('descripcion');
+      $lamina->categoria_id=$request->get('categoria_id');
+
+      $lamina->save();
+
+      return Redirect::to('laminas');
     }
 
     /**
@@ -63,7 +76,11 @@ class LaminaController extends Controller
      */
     public function show($id)
     {
-        //
+      $laminas=DB::table('laminas as lam')
+      ->join('categoria as cat', 'lam.categoria_id','=','cat.id')
+      ->select('lam.id','lam.nombre','lam.lamina','lam.descripcion',DB::raw("cat.nombre as categoria"))
+      ->where('lam.id','=',$id)->first();
+      return view("laminas.show",["lamina"=>Lamina::findOrFail($id)]);
     }
 
     /**
@@ -87,7 +104,17 @@ class LaminaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $lamina= Lamina::findOrFail($id);
+      $lamina->id=$request->get('id');
+      $lamina->nombre=$request->get('nombre');
+      $lamina->lamina=$request->get('foto');
+      $lamina->descripcion=$request->get('descripcion');
+      $lamina->categoria_id=$request->get('categoria_id');
+
+      $lamina->Update();
+
+      return Redirect::to('laminas');
+
     }
 
     /**
