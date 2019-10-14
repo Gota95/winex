@@ -57,7 +57,7 @@ class LaminaController extends Controller
       $lamina->nombre=$request->get('nombre');
       if(Input::hasFile('lamina')){
         $file=Input::file('lamina');
-        $file->move(public_path().'/imagenes/laminas/',$file->getClientOriginalName());
+        $file->move(public_path().'laminas/',$file->getClientOriginalName());
         $lamina->lamina=$file->getClientOriginalName();
       }
       $lamina->descripcion=$request->get('descripcion');
