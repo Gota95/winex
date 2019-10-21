@@ -57,7 +57,7 @@ class LaminaController extends Controller
       $lamina->nombre=$request->get('nombre');
       if(Input::hasFile('lamina')){
         $file=Input::file('lamina');
-        $file->move(public_path().'laminas/',$file->getClientOriginalName());
+        $file->move(public_path().'/anexos/',$file->getClientOriginalName());
         $lamina->lamina=$file->getClientOriginalName();
       }
       $lamina->descripcion=$request->get('descripcion');
@@ -76,10 +76,6 @@ class LaminaController extends Controller
      */
     public function show($id)
     {
-      $laminas=DB::table('laminas as lam')
-      ->join('categoria as cat', 'lam.categoria_id','=','cat.id')
-      ->select('lam.id','lam.nombre','lam.lamina','lam.descripcion',DB::raw("cat.nombre as categoria"))
-      ->where('lam.id','=',$id)->first();
       return view("laminas.show",["lamina"=>Lamina::findOrFail($id)]);
     }
 
