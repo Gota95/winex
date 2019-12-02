@@ -15,6 +15,7 @@
         <thead>
 					<th>Fecha</th>
           <th>Hora</th>
+          <th>Carrera</th>
           <th>Grado</th>
           <th>Sección</th>
           <th>Opciones</th>

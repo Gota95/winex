@@ -26,7 +26,7 @@ class AsignacionesFormRequest extends FormRequest
         return [
           'fecha_asignacion',
           'nuevo_reingreso',
-          'estudiante_id',
+          'estudiante_id'=>['unique:asignacion'],
           'ciclo_id',
           'seccion_id',
           'grado_id',

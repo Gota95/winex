@@ -64,6 +64,7 @@ Route::resource('usuarios','UsuariosController');
 
 //RUTAS DE MODULO ASISTENCIA
 Route::resource('asistencia','AsistenciaController');
+Route::post('asistencia/list','AsistenciaController@listar');
 
 //RUTAS DE MODULO MENSAJERIA
 Route::resource('telegram','MensajeriaController');

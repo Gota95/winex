@@ -18,33 +18,125 @@
 {!!Form::open(array('url'=>'asistencia/','method'=>'POST','autocomplete'=>'off','files'=>'true'))!!}
       {{Form::token()}}
       <div class="row">
+        <?php $fcha = date("Y-m-d");?>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label for="Fecha">Fecha de Asistencia</label>
+                    <input type="date" name="Fecha" value="<?php echo $fcha;?>" readonly class="form-control">
+                  </div>
+                </div>
+        <?php $hra = date("H:m");?>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <div class="form-group">
+                    <label for="Hora">Hora de Asistencia</label>
+                    <input type="time" name="Hora" value="<?php echo $hra;?>" readonly class="form-control">
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label for="idcarrera">Carrera </label>
+                    <select data-live-search="true" name="idcarrera" id="idcarrera" readonly class="form-control selectpicker" <script src="{{asset('js/bootstrap.min.js')}}"></script>>
+                      @foreach($carrera as $c)
+                        <option value="{{$c->id}}">{{$c->carrera}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label for="idgrado">Grado </label>
+                    <select data-live-search="true" name="idgrado" id="idgrado" readonly class="form-control selectpicker" <script src="{{asset('js/bootstrap.min.js')}}"></script>>
+                      @foreach($grado as $g)
+                        <option value="{{$g->id}}">{{$g->grado}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                  <div class="form-group">
+                    <label for="idseccion">Sección </label>
+                    <select data-live-search="true" name="idseccion" id="idseccion" readonly class="form-control selectpicker" <script src="{{asset('js/bootstrap.min.js')}}"></script>>
+                      @foreach($seccion as $sec)
+                        <option value="{{$sec->id}}">{{$sec->seccion}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+
        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
          <div class="table-responsive">
            <table class="table table-striped table-bordered table-condensed table-hover">
              <thead>
-               <th>Peresente</th>
+               <th class="col-lg-2">Asistencia</th>
                <th>Alumno</th>
-               <th>Hora</th>
-               <th>Fecha</th>
+               {{-- <th>Opciones</th> --}}
              </thead>
 
-             @foreach($asistencias as $asi)
+             @foreach($asignacion as $asi)
                <tr>
-                 <td><input id="presente" type="checkbox">{{$asi->Presente}}</td>
-                 <td>{{$asi->nombre_estudiante.''.$asi->apellido_estudiante}}</td>
-                 <td>{{$asi->Hora}}</td>
-                 <td>{{$asi->Fecha}}</td>
-                 <td>
-                   <a href="{{URL::action('AsistenciaController@edit', $asi->IdAsistencia)}}">
+                 <td><input id="presente" type="checkbox"></td>
+                 <td><input readonly name="idestudiante" value="{{$asi->e_nombres.' '.$asi->e_apellidos}}"></td>
+                 {{-- <td>
+                    <a href="{{URL::action('AsistenciaController@edit', $asi->IdAsistencia)}}">
                      <button class="btn btn-info fa fa-edit"></button>
                    </a>
-                 </td>
+                 </td> --}}
                </tr>
              @endforeach
            </table>
          </div>
-         {{$asistencias->render()}}
+       </div>
+
+       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="guardar">
+       <div class="form-group">
+         <input name="_token" value="{{ csrf_token() }}" type="hidden"></input>
+         <button class="btn btn-primary" type="submit">Guardar</button>
+         <button class="btn btn-danger" type="reset">Cancelar</button>
+       </div>
        </div>
       </div>
       {{ Form::close() }}
+      {{-- @push('sc')
+        <script>
+          $(document).ready(function(){
+            $(#bt_v).click(function(){
+              ver();
+            });
+          });
+          var cont=0;
+          var total=0;
+          var asignaciones=@json($asignacion);
+          function ver()
+          {
+            idcarrera=$("#idcarrera").val();
+            idgrado=$("#idgrado").val();
+            idseccion=$("#idseccion").val();
+              asignaciones.foreach(function(value))
+              {
+                if(a->carrera_id==idcarrera && a->grado_id==idgrado && a->seccion==idseccion)
+                {
+                var fila='<tr id="fila'+cont+'"><td><input type="checkbox" class="custom-control-input" onclick="check('+cont+')"></input></td><td><input type="hidden" name="idalumno[]"value="'+a->estudiante_id+'"></input>'+a->e_nombres+.' '.+a->e_apellidos+'</td></tr>';
+                evaluar();
+                $('#detalles').append(fila);
+                }
+                cont++;
+              }
+          }
+
+          function evaluar()
+          {
+            if(total>0)
+            {
+              $("#guardar").show();
+            }
+            else
+            {
+              $("#guardar").hide();
+            }
+          }
+        </script>
+      @endpush --}}
     @endsection

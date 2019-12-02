@@ -25,9 +25,10 @@ class AsistenciaController extends Controller
     if($request){
       $query= trim($request->get('searchText'));
       $asistencias=DB::table('asistencia as asi')
+      ->join('carrera1 as c', 'asi.idcarrera','=','c.id')
       ->join('grado as g', 'asi.idgrado','=','g.id')
       ->join('seccion as s', 'asi.idseccion','=','s.id')
-      ->select('asi.IdAsistencia','asi.Hora','asi.Fecha',DB::raw("g.grado as grado"),DB::raw("s.seccion as seccion"))
+      ->select('asi.IdAsistencia','asi.Hora','asi.Fecha',DB::raw("g.grado as grado"),DB::raw("s.seccion as seccion"),DB::raw("c.carrera as carrera"))
       ->where('asi.Fecha','LIKE','%'.$query.'%')
       ->orderBy('asi.IdAsistencia','asc')
       ->paginate(7);
@@ -35,22 +36,33 @@ class AsistenciaController extends Controller
       return view('asistencia.index',["asistencias"=>$asistencias, "searchText"=>$query]);
     }
   }
-
-  public function create(){
+  public function listar(Request $request){
+    $carrera=DB::table('carrera1 as c')->select('c.id','c.carrera')->where('c.id','=',$request->get('sidcarrera'))->get();
+    $grado=DB::table('grado as g')->select('g.id','g.grado')->where('g.id','=',$request->get('sidgrado'))->get();
+    $seccion=DB::table('seccion as s')->select('s.id','s.seccion')->where('s.id','=',$request->get('sidseccion'))->get();
     $asignacion=DB::table('asignacion as a')
     ->join('estudiante as e','a.estudiante_id','=','e.id')
+    ->join('carrera1 as c','a.carrera_id','c.id')
+    ->join('grado as g','a.grado_id','g.id')
+    ->join('seccion as s','a.seccion_id','s.id')
     ->select('a.id',DB::raw('e.nombres as e_nombres'),DB::raw('e.apellidos as e_apellidos'))
+    ->where('c.id','=',$request->get('sidcarrera'),'and','g.id','=',$request->get('sidgrado'),'and','s.id','=',$seccion->get('sidseccion'))
     ->get();
+
+    return view("asistencia.list",["asignacion"=>$asignacion,"carrera"=>$carrera,"grado"=>$grado,"seccion"=>$seccion]);
+  }
+
+  public function create(){
     $carreras=DB::table('carrera1')->get();
     $grados=DB::table('grado')->get();
     $secciones=DB::table('seccion as s')
     ->select('s.id','s.grado_id','s.seccion')
     ->get();
     return view("asistencia.create",["carreras"=>$carreras,
-    "grados"=>$grados,"secciones"=>$secciones,"asignacion"=>$asignacion]);
+    "grados"=>$grados,"secciones"=>$secciones]);
   }
 
-public function store(AsistenciaFormRequest $request /*Request $request*/){
+public function store(AsistenciaFormRequest $request){
   try {
 
     DB::beginTransaction();
@@ -59,6 +71,7 @@ public function store(AsistenciaFormRequest $request /*Request $request*/){
     $asistencia->IdAsistencia=$request->get('IdAsistencia');
     $asistencia->fecha = $request->get('Fecha');
     $asistencia->hora = $request->get('Hora');
+    $asistencia->idcarrera = $request->get('idcarrera');
     $asistencia->idgrado = $request->get('idgrado');
     $asistencia->idseccion = $request->get('idseccion');
     $asistencia->save();
@@ -72,7 +85,7 @@ public function store(AsistenciaFormRequest $request /*Request $request*/){
     while($cont < count($idalumno))
     {
       $detalle=new DetalleAsistencia;
-      $detalle->idasistencia=$asistencia->IdAsistencia;
+      $detalle->idasistencia = $asistencia->IdAsistencia;
       $detalle->idalumno=$idalumno[$cont];
       $detalle->presente=$presente[$cont];
       if($presente == '0'){
