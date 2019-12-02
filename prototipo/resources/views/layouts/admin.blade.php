@@ -283,6 +283,8 @@
             } );
         } )( jQuery );
     </script>
+    @stack('sc')
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
 </body>
 </html>

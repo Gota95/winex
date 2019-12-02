@@ -41,9 +41,9 @@
 								<button class="btn btn-danger fa  fa-trash-o"></button>
 							</a>
 
-							<a href="{{URL::action('CarnetController@print',$car->id)}}">
+							{{-- <a href="{{URL::action('CarnetController@print',$car->id)}}">
 								<button class="btn btn-primary fa fa-gg"></button>
-							</a>
+							</a> --}}
 						</td>
 					</tr>
 					@include('carnet.modal')

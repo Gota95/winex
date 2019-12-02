@@ -13,18 +13,19 @@
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-condensed table-hover">
         <thead>
-          <th>Peresente</th>
-          <th>Alumno</th>
+					<th>Fecha</th>
           <th>Hora</th>
-          <th>Fecha</th>
+          <th>Grado</th>
+          <th>Sección</th>
+          <th>Opciones</th>
         </thead>
 
         @foreach($asistencias as $asi)
           <tr>
-            <td><input id="presente" type="checkbox">{{$asi->Presente}}</td>
-            <td>{{$asi->nombre_estudiante.''.$asi->apellido_estudiante}}</td>
-            <td>{{$asi->Hora}}</td>
             <td>{{$asi->Fecha}}</td>
+						<td>{{$asi->Hora}}</td>
+						<td>{{$asi->grado}}</td>
+						<td>{{$asi->seccion}}</td>
             <td>
               <a href="{{URL::action('AsistenciaController@edit', $asi->IdAsistencia)}}">
                 <button class="btn btn-info fa fa-edit"></button>

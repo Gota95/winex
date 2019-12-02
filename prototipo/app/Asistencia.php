@@ -14,7 +14,8 @@ class Asistencia extends Model
   protected $fillable = [
     'Hora',
     'Fecha',
-    'Presente',
-    'estudiante_id'
+    'idcarrera',
+    'idgrado',
+    'idseccion'
   ];
 }

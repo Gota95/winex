@@ -65,15 +65,8 @@ class CarnetController extends Controller
     return Redirect::to('carnet/');
   }
 
-  public function print(Request $request, $id)
+  public function show($id)
   {
-      $carnet=DB::table('carnet as cat')
-      ->join('estudiante as est', 'cat.estudiante_id','=','est.id')
-      ->join('seccion as sec', 'cat.seccion_id','=','sec.id')
-      ->select('cat.id','cat.numerocarnet','codigo_qr',DB::raw('est.nombres as nombres_estudiante'),DB::raw('est.apellidos as apellidos_estudiante'), DB::raw('sec.seccion as seccion_alumno'))
-      ->where('est.id','=',$id)->first();
-
-      $pdf = PDF::loadView('carnet.print', compact('carnet'))->setPaper('plantilla', 'portrait')->setWarnings(false)->save('carnet.pdf');
-      return $pdf->stream('carnet.pdf');
+      return view("carnet.generar",["carnet"=>Carnet::findOrFail($id)]);
   }
 }

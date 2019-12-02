@@ -25,7 +25,7 @@ class CarnetFormRequest extends FormRequest
     {
         return [
           'numerocarnet'=> 'required|string|max:45',
-          'codigo_qr'=> 'mimes:jpg,bmp,png',
+          'codigo_qr',
           'estudiante_id',
           'seccion_id'
         ];

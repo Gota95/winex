@@ -30,8 +30,8 @@ class EstudiantesFormRequest extends FormRequest
           'fecha_nac',
           'direccion'=> 'required|string|max:100',
           'clave',
-          'certificado'=> 'mimes:jpg,bmp,png',
-          'foto'=> 'mimes:jpg,bmp,png',
+          'certificado',
+          'foto',
           'estado',
           'genero_id'
         ];

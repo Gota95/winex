@@ -38,13 +38,8 @@
                    <a href="{{URL::action('AsistenciaController@edit', $asi->IdAsistencia)}}">
                      <button class="btn btn-info fa fa-edit"></button>
                    </a>
-
-                   <a href="" data-target="#modal-delete-{{$asi->IdAsistencia}}" data-toggle="modal">
-                     <button class="btn btn-danger fa  fa-trash-o"></button>
-                   </a>
                  </td>
                </tr>
-               @include('asistencia.modal')
              @endforeach
            </table>
          </div>
