@@ -36,30 +36,22 @@ class AsistenciaController extends Controller
       return view('asistencia.index',["asistencias"=>$asistencias, "searchText"=>$query]);
     }
   }
-  public function listar(Request $request){
-    $carrera=DB::table('carrera1 as c')->select('c.id','c.carrera')->where('c.id','=',$request->get('sidcarrera'))->get();
-    $grado=DB::table('grado as g')->select('g.id','g.grado')->where('g.id','=',$request->get('sidgrado'))->get();
-    $seccion=DB::table('seccion as s')->select('s.id','s.seccion')->where('s.id','=',$request->get('sidseccion'))->get();
+
+  public function create(){
     $asignacion=DB::table('asignacion as a')
     ->join('estudiante as e','a.estudiante_id','=','e.id')
     ->join('carrera1 as c','a.carrera_id','c.id')
     ->join('grado as g','a.grado_id','g.id')
     ->join('seccion as s','a.seccion_id','s.id')
-    ->select('a.id',DB::raw('e.nombres as e_nombres'),DB::raw('e.apellidos as e_apellidos'))
-    ->where('c.id','=',$request->get('sidcarrera'),'and','g.id','=',$request->get('sidgrado'),'and','s.id','=',$seccion->get('sidseccion'))
+    ->select('a.id','a.estudiante_id','a.ciclo_id','a.carrera_id','a.grado_id','a.seccion_id',DB::raw('e.nombres as e_nombres'),DB::raw('e.apellidos as e_apellidos'))
     ->get();
-
-    return view("asistencia.list",["asignacion"=>$asignacion,"carrera"=>$carrera,"grado"=>$grado,"seccion"=>$seccion]);
-  }
-
-  public function create(){
     $carreras=DB::table('carrera1')->get();
     $grados=DB::table('grado')->get();
     $secciones=DB::table('seccion as s')
     ->select('s.id','s.grado_id','s.seccion')
     ->get();
     return view("asistencia.create",["carreras"=>$carreras,
-    "grados"=>$grados,"secciones"=>$secciones]);
+    "grados"=>$grados,"secciones"=>$secciones,"asignaciones"=>$asignacion]);
   }
 
 public function store(AsistenciaFormRequest $request){

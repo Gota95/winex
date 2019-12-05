@@ -252,10 +252,13 @@
 
     <!-- Right Panel -->
 
+    @stack('scripts')
+    <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/vendor/jquery-2.1.4.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="{{asset('js/plugins.js')}}"></script>
     <script src="{{asset('js/main.js')}}"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
 
 
     <script src="{{asset('js/lib/chart-js/Chart.bundle.js')}}"></script>
@@ -283,8 +286,6 @@
             } );
         } )( jQuery );
     </script>
-    @stack('sc')
-    <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
 </body>
 </html>
