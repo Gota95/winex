@@ -24,14 +24,13 @@ class AsistenciaFormRequest extends FormRequest
     public function rules()
     {
         return [
-          'Hora','require',
-          'Fecha','require',
-          'idcarrera','require',
-          'idgrado','require',
-          'idseccion','require',
-          'idalumno','require',
-          'idasistencia','require',
-          'presente','require'
+          'Hora'=>'required',
+          'Fecha'=>'required',
+          'idcarrera'=>'required',
+          'idgrado'=>'required',
+          'idseccion'=>'required',
+          'idalumno'=>'required',
+          'presente'=>'required'
         ];
     }
 }

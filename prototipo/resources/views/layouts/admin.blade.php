@@ -19,10 +19,10 @@
     <link rel="stylesheet" href="{{asset('css/themify-icons.css')}}">
     <link rel="stylesheet" href="{{asset('css/flag-icon.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/cs-skin-elastic.css')}}">
+    <link rel="stylesheet" href="{{asset('public/iCheck/flat/blue.css')}}">
+    
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-
-    <script src="{{asset('//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js')}}"></script>
     <script src="{{asset('//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js')}}"></script>
     <script src="{{asset('//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.2.7/fullcalendar.min.js')}}"></script>
 
@@ -252,14 +252,14 @@
 
     <!-- Right Panel -->
 
-    @stack('scripts')
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/vendor/jquery-2.1.4.min.js')}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
     <script src="{{asset('js/plugins.js')}}"></script>
-    <script src="{{asset('js/main.js')}}"></script>
-    <script src="{{asset('js/jquery.min.js')}}"></script>
 
+    @stack('scripts')
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    <script src="{{asset('js/main.js')}}"></script>
 
     <script src="{{asset('js/lib/chart-js/Chart.bundle.js')}}"></script>
     <script src="{{asset('js/dashboard.js')}}"></script>

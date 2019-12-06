@@ -25,6 +25,7 @@
           <tr>
             <td>{{$asi->Fecha}}</td>
 						<td>{{$asi->Hora}}</td>
+						<td>{{$asi->carrera}}</td>
 						<td>{{$asi->grado}}</td>
 						<td>{{$asi->seccion}}</td>
             <td>

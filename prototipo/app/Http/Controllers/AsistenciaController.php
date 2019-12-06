@@ -38,6 +38,8 @@ class AsistenciaController extends Controller
   }
 
   public function create(){
+    $f=date("Y-m-d");
+    $asistencias=DB::table('asistencia as asi')->where('asi.Fecha','=',$f)->get();
     $asignacion=DB::table('asignacion as a')
     ->join('estudiante as e','a.estudiante_id','=','e.id')
     ->join('carrera1 as c','a.carrera_id','c.id')
@@ -51,7 +53,7 @@ class AsistenciaController extends Controller
     ->select('s.id','s.grado_id','s.seccion')
     ->get();
     return view("asistencia.create",["carreras"=>$carreras,
-    "grados"=>$grados,"secciones"=>$secciones,"asignaciones"=>$asignacion]);
+    "grados"=>$grados,"secciones"=>$secciones,"asignaciones"=>$asignacion,"asistencias"=>$asistencias]);
   }
 
 public function store(AsistenciaFormRequest $request){
@@ -60,7 +62,6 @@ public function store(AsistenciaFormRequest $request){
     DB::beginTransaction();
 
     $asistencia= new Asistencia;
-    $asistencia->IdAsistencia=$request->get('IdAsistencia');
     $asistencia->fecha = $request->get('Fecha');
     $asistencia->hora = $request->get('Hora');
     $asistencia->idcarrera = $request->get('idcarrera');
@@ -69,7 +70,7 @@ public function store(AsistenciaFormRequest $request){
     $asistencia->save();
 
     $idalumno=$request->get('idalumno');
-    $idasistencia=$request->get('idasistencia');
+    $idasistencia=$asistencia->IdAsistencia;
     $presente=$request->get('presente');
 
     $cont = 0;
@@ -79,8 +80,14 @@ public function store(AsistenciaFormRequest $request){
       $detalle=new DetalleAsistencia;
       $detalle->idasistencia = $asistencia->IdAsistencia;
       $detalle->idalumno=$idalumno[$cont];
-      $detalle->presente=$presente[$cont];
-      if($presente == '0'){
+      if($presente[$cont]=="P"){
+      $detalle->presente=1;
+      }
+      else if($presente[$cont]=="A")
+      {
+        $detalle->presente=1;
+      }
+      if($presente[$cont] == "A"){
         $text = "Nuevo mensaje del administrador\n"
         . "<b>Fecha de Envio: </b>\n"
         . "$asistencia->fecha\n"
