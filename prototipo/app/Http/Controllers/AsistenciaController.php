@@ -95,7 +95,7 @@ public function store(AsistenciaFormRequest $request){
         . "El estudiante con ID ". $asistencia->estudiante_id. " no se presento a la actividad del dia de hoy";
 
         Telegram::sendMessage([
-          'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001413350349.0'),
+          'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
           'parse_mode' => 'HTML',
           'text' => $text
         ]);

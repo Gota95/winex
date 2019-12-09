@@ -68,6 +68,7 @@ Route::post('asistencia/list','AsistenciaController@listar');
 
 //RUTAS DE MODULO MENSAJERIA
 Route::resource('telegram','MensajeriaController');
+Route::get('/updated-activity', 'TelegramController@updatedActivity');
 
 //RUTAS DE MODULO CARNET
 Route::resource('carnet','CarnetController');

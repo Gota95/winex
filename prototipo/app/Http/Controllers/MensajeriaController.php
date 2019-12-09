@@ -53,7 +53,7 @@ class MensajeriaController extends Controller
 				. $mensaje->mensaje;
 
 		Telegram::sendMessage([
-				'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001413350349.0'),
+				'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
 				'parse_mode' => 'HTML',
 				'text' => $text
 		]);

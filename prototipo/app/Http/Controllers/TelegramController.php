@@ -16,7 +16,16 @@ class TelegramController extends Controller
   public function updatedActivity()
    {
        $activity = Telegram::getUpdates();
-       dd($activity);
+       $texto=$activity[count($activity)-1]->getMessage()->getText();
+       if($texto == 'hi'){
+         $text = "hola si estoy recibiendo texto";
+         Telegram::sendMessage([
+           'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
+           'parse_mode' => 'HTML',
+           'text' => $text
+         ]);
+       }
+
    }
 
    public function sendMessage()
@@ -60,7 +69,7 @@ class TelegramController extends Controller
        $photo = $request->file('file');
 
        Telegram::sendPhoto([
-           'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001413350349.0'),
+           'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
            'photo' => InputFile::createFromContents(file_get_contents($photo->getRealPath()), str_random(10) . '.' . $photo->getClientOriginalExtension())
        ]);
 
