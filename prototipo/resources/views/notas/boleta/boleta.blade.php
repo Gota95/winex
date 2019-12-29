@@ -4,36 +4,51 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
           <title>Boleta de Notas: {{$datos->nombre_estudiante.' '.$datos->apellido_estudiante}} </title>
         <link href="styles.css" rel="stylesheet" type="text/css">
-
+        <style>
+        table{
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        td, th{
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+        tr:nth-child(even){
+          background-color: #dddddd;
+        }
+        </style>
 
 </head>
 <body>
       <img src="img/logo.png"  height="100" width="100">
-      <SPAN style="position: absolute; top: 0 px; right:   150 px;"><b> Instituto Normal Mixto de Occidente "Rufino Barrios"</b> </span>
+      <SPAN style="position: absolute; top: 0 px; right:   150 px;"><b> Instituto Normal Mixto de Occidente "Justo Rufino Barrios"</b> </span>
       <SPAN style="position: absolute; top: 20 px; right:  250 px;"><b> Boleta de Calificaciones</b> </span>
-      <SPAN style="position: absolute; top: 40 px; right:   230 px;">  Correspondientes al Bimestre V</span>
+      <SPAN></span>
 
         <p>Estudiante: {{$datos->nombre_estudiante.' '.$datos->apellido_estudiante}} </p>
         <p>Grado: {{$datos->grado.' '.$datos->carrera.' '.$datos->seccion}} </p>
-        <table >
-  <thead>
-  <tr>
+  <table >
+    <tr>
       <th>Curso</th>
-      <th>Nota</th>
+      <th>UNIDAD I</th>
+      <th>UNIDAD II</th>
+      <th>UNIDAD III</th>
+      <th>UNIDAD IV</th>
     </tr>
-    </thead>
-    <tfoot>
     @foreach($notas as $no)
     {!!$bimestre = $no->bimestre!!}
-    @if($bimestre == 'V')
+    @if($bimestre == 'I')
       <tr>
         <td>{{$no->curso}}</td>
         <td> {{$no->nota}} </td>
-
+        <td> {{$no->nota}} </td>
+        <td> {{$no->nota}} </td>
+        <td> {{$no->nota}} </td>
       </tr>
-  @endif
+    @endif
     @endforeach
-  </tbody>
   </table>
 
 <p>Observaciones: ____________________________________________________________________________________________ </p>

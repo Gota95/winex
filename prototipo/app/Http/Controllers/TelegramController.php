@@ -7,24 +7,34 @@ use Illuminate\Http\Request;
 
 use Telegram\Bot\FileUpload\InputFile;
 use Telegram\Bot\Laravel\Facades\Telegram;
+use App\Traits\RequestTrait;
 
 
 class TelegramController extends Controller
 {
 
+  use RequestTrait;
+
+  public function webhook()
+  {
+    return $this->apiRequest('setWebhook',[
+      'url' => str_replace('http' , 'https', url(route('webhook')))
+      ]) ? ['success'] : ['something wrong'];
+  }
 
   public function updatedActivity()
    {
        $activity = Telegram::getUpdates();
        $texto=$activity[count($activity)-1]->getMessage()->getText();
-       if($texto == 'hi'){
-         $text = "hola si estoy recibiendo texto";
-         Telegram::sendMessage([
-           'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
-           'parse_mode' => 'HTML',
-           'text' => $text
+       if($texto == '/lamina'){
+         $document = InputFile::createFromContents(file_get_contents('anexos/sistema digestivo.pdf'),'anexos/sistema digestivo.pdf');
+         Telegram::sendDocument([
+           'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001465621354'),
+           'document' => $document,
+           'caption' => 'Envio de Documento',
          ]);
        }
+       dd($activity);
 
    }
 
@@ -47,7 +57,7 @@ class TelegramController extends Controller
            . $request->message;
 
        Telegram::sendMessage([
-           'chat_id' => env('TELEGRAM_CHANNEL_ID', '-1001413350349.0'),
+           'chat_id' => env('TELEGRAM_CHANNEL_ID', '773684137'),
            'parse_mode' => 'HTML',
            'text' => $text
        ]);
@@ -69,7 +79,7 @@ class TelegramController extends Controller
        $photo = $request->file('file');
 
        Telegram::sendPhoto([
-           'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
+           'chat_id' => env('TELEGRAM_CHANNEL_ID', '773684137'),
            'photo' => InputFile::createFromContents(file_get_contents($photo->getRealPath()), str_random(10) . '.' . $photo->getClientOriginalExtension())
        ]);
 

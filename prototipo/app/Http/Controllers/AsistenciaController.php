@@ -23,12 +23,14 @@ class AsistenciaController extends Controller
 
   public function index(Request $request){
     if($request){
+      $day=date("Y-m-d");
       $query= trim($request->get('searchText'));
       $asistencias=DB::table('asistencia as asi')
       ->join('carrera1 as c', 'asi.idcarrera','=','c.id')
       ->join('grado as g', 'asi.idgrado','=','g.id')
       ->join('seccion as s', 'asi.idseccion','=','s.id')
       ->select('asi.IdAsistencia','asi.Hora','asi.Fecha',DB::raw("g.grado as grado"),DB::raw("s.seccion as seccion"),DB::raw("c.carrera as carrera"))
+      ->where('asi.Fecha','>=',$day)
       ->where('asi.Fecha','LIKE','%'.$query.'%')
       ->orderBy('asi.IdAsistencia','asc')
       ->paginate(7);
@@ -85,20 +87,7 @@ public function store(AsistenciaFormRequest $request){
       }
       else if($presente[$cont]=="A")
       {
-        $detalle->presente=1;
-      }
-      if($presente[$cont] == "A"){
-        $text = "Nuevo mensaje del administrador\n"
-        . "<b>Fecha de Envio: </b>\n"
-        . "$asistencia->fecha\n"
-        . "<b>Informacion: </b>\n"
-        . "El estudiante con ID ". $asistencia->estudiante_id. " no se presento a la actividad del dia de hoy";
-
-        Telegram::sendMessage([
-          'chat_id' => env('TELEGRAM_CHANNEL_ID', '960305286'),
-          'parse_mode' => 'HTML',
-          'text' => $text
-        ]);
+        $detalle->presente=0;
       }
       $detalle->save();
       $cont=$cont+1;
@@ -112,7 +101,20 @@ public function store(AsistenciaFormRequest $request){
   }
 
   public function show($id){
-    return view("asistencia.show",["asistencia"=>Asistencia::findOrFail($IdAsistencia)]);
+    $detalle=DB::table('detalle_asistencia as da')
+    ->join('estudiante as es','da.idalumno','=','es.id')
+    ->select('da.idasistencia','da.presente',DB::raw('es.nombres as nombre_estudiante'),DB::raw('es.apellidos as apellido_estudiante'))
+    ->where('da.idasistencia','=',$id)
+    ->get();
+    $asistencia=DB::table('asistencia as asis')
+    ->join('carrera1 as c','asis.idcarrera','=','c.id')
+    ->join('grado as g','asis.idgrado','=','g.id')
+    ->join('seccion as s','asis.idseccion','=','s.id')
+    ->select('asis.IdAsistencia','asis.Hora','asis.Fecha',DB::raw('c.carrera as carrera'),DB::raw('g.grado as grado'),
+    DB::raw('s.seccion as seccion'))
+    ->where('asis.IdAsistencia','=',$id)
+    ->get();
+    return view("asistencia.show",["asistencia"=>$asistencia,"detalle"=>$detalle]);
   }
 
   public function edit($id){
@@ -134,5 +136,26 @@ public function store(AsistenciaFormRequest $request){
   public function destroy($id){
     $asistencia= DB::table('asistencia')->where('IdAsistencia', '=',$id)->delete();
     return Redirect::to('asistencia/');
+  }
+
+  public function rasistencias($id){
+    $detalle=DB::table('detalle_asistencia as da')
+    ->join('estudiante as es','da.idalumno','=','es.id')
+    ->select('da.idasistencia','da.presente',DB::raw('es.nombres as nombre_estudiante'),DB::raw('es.apellidos as apellido_estudiante'))
+    ->where('da.idasistencia','=',$id)
+    ->get();
+    $asistencia=DB::table('asistencia as asis')
+    ->join('carrera1 as c','asis.idcarrera','=','c.id')
+    ->join('grado as g','asis.idgrado','=','g.id')
+    ->join('seccion as s','asis.idseccion','=','s.id')
+    ->select('asis.IdAsistencia','asis.Hora','asis.Fecha',DB::raw('c.carrera as carrera'),DB::raw('g.grado as grado'),
+    DB::raw('s.seccion as seccion'))
+    ->where('asis.IdAsistencia','=',$id)
+    ->get();
+
+    $view= \View::make('asistencia.reporte')->with('asistencia',$asistencia)->with('detalle',$detalle);
+    $pdf = \App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+    return $pdf->stream('asistencias'.'.pdf');
   }
 }

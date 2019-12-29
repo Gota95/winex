@@ -31,6 +31,5 @@
 		</div>
 </div>
 @endsection
-<scripr>
-
-</scripr>
+<script>
+</script>

@@ -7,7 +7,6 @@
 		@include('asistencia.search')
 	</div>
 </div>
-
  <div class="row">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="table-responsive">
@@ -33,9 +32,18 @@
                 <button class="btn btn-info fa fa-edit"></button>
               </a>
 
+							<a href="{{URL::action('AsistenciaController@show', $asi->IdAsistencia)}}">
+                <button class="btn btn-info fa fa-eye"></button>
+              </a>
+
               <a href="" data-target="#modal-delete-{{$asi->IdAsistencia}}" data-toggle="modal">
                 <button class="btn btn-danger fa  fa-trash-o"></button>
               </a>
+
+							<a href="{{URL::action('AsistenciaController@rasistencias', $asi->IdAsistencia)}}">
+                <button class="btn btn-info fa fa-print"></button>
+              </a>
+
             </td>
           </tr>
           @include('asistencia.modal')
@@ -45,15 +53,4 @@
     {{$asistencias->render()}}
   </div>
 </div>
-<script type="text/javascript">
-  var $aist=$asistencias;
-  if($aist->Presente==1)
-  {
-    checkbox=true;
-  }
-  else{
-    checkbox=false;
-  }
-    $('#presente').checkbox();
-</script>
 @endsection

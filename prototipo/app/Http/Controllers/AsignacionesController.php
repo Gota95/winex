@@ -40,7 +40,8 @@ class AsignacionesController extends Controller
     $secciones=DB::table('seccion')->get();
     $grados=DB::table('grado')->get();
     $carreras=DB::table('carrera1')->get();
-    return view("asignacion_cursos.create",["estudiantes"=>$estudiantes,"ciclos"=>$ciclos,"secciones"=>$secciones,"grados"=>$grados,"carreras"=>$carreras]);
+    return view("asignacion_cursos.create",["estudiantes"=>$estudiantes,"ciclos"=>$ciclos,
+    "secciones"=>$secciones,"grados"=>$grados,"carreras"=>$carreras]);
   }
 
   public function store(AsignacionesFormRequest $request /*Request $request*/){
@@ -62,7 +63,13 @@ class AsignacionesController extends Controller
   }
 
   public function edit($id){
-    return view("asignacion_cursos.edit",["asignacion"=>Asignaciones::findOrFail($id)]);
+    $alumnos=DB::table('estudiante')->get();
+    $ciclo=DB::table('ciclo')->get();
+    $secciones=DB::table('seccion')->get();
+    $grados=DB::table('grado')->get();
+    $carreras=DB::table('carrera1')->get();
+    return view("asignacion_cursos.edit",["asignacion"=>Asignaciones::findOrFail($id),
+    'estudiantes'=>$alumnos,"ciclos"=>$ciclo,"secciones"=>$secciones,"grados"=>$grados,"carreras"=>$carreras]);
   }
 
   public function update(AsignacionesFormRequest $request, $id){

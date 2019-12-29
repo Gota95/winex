@@ -21,7 +21,7 @@
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
     			<div class="form-group">
     				<label for="fecha_asignacion">Fecha de Asignacion</label>
-    				<input type="date" name="fecha_asignacion" value="{{$asignacion->fecha_asignacion}}" class="form-control">
+    				<input type="text" name="fecha_asignacion" value="{{$asignacion->fecha_asignacion}}" class="form-control">
     			</div>
     		</div>
 

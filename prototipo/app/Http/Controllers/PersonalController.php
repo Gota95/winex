@@ -22,9 +22,9 @@ class PersonalController extends Controller
       $personales=DB::table('personal as per')
       ->join('cargo as car', 'per.cargo_id','=','car.id')
       ->join('users as usu', 'per.usuario_id','=','usu.id')
-      ->join('centro as cen', 'per.centro_id','=','cen.id')
       ->join('genero as gen', 'per.genero_id','=','gen.id')
-      ->select('per.id','per.nombres','per.apellidos','per.fecha_nac','per.lugar_nac','per.estado_civil','per.direccion','per.inicio_labores','per.foto','per.cui','per.telefono','per.correo','per.estado',DB::raw("car.cargo as cargo"),DB::raw("usu.email as usuario"),DB::raw("cen.nombre as centro"),DB::raw("gen.genero as genero"))
+      ->select('per.id','per.nombres','per.apellidos','per.fecha_nac','per.lugar_nac','per.estado_civil',
+      'per.direccion','per.inicio_labores','per.foto','per.cui','per.telefono','per.correo','per.estado','per.centro_id',DB::raw("car.cargo as cargo"),DB::raw("usu.email as usuario"),DB::raw("gen.genero as genero"))
       ->where('per.nombres','LIKE','%'.$query.'%')
       ->orderBy('per.id','asc')
       ->paginate(7);

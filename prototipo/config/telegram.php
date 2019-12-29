@@ -34,7 +34,7 @@ return [
     'bots'                         => [
         'mybot' => [
             'username'            => 'Winexgt',
-            'token'               => env('TELEGRAM_BOT_TOKEN', ''),
+            'token'               => env('TELEGRAM_BOT_TOKEN', '924383926:AAGHlko6pUKSUHV2UPPweIUYVS-8Effq8xY'),
             'certificate_path'    => env('TELEGRAM_CERTIFICATE_PATH', ''),
             'webhook_url'         => env('TELEGRAM_WEBHOOK_URL', ''),
             'commands'            => [

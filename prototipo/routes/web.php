@@ -53,22 +53,18 @@ Route::resource('notas/aspecto','AspectosController');
 Route::resource('notas/nota','NotasController');
 Route::resource('notas/tipo_evaluacion','TipoEvaluacionController');
 Route::resource('notas/boleta','BoletasController');
-Route::get('views/notas/boleta/boletabi1/{id}', 'BoletasController@boletabi1');
-Route::get('views/notas/boleta/boletabi2/{id}', 'BoletasController@boletabi2');
-Route::get('views/notas/boleta/boletabi3/{id}', 'BoletasController@boletabi3');
-Route::get('views/notas/boleta/boletabi4/{id}', 'BoletasController@boletabi4');
-Route::get('views/notas/boleta/boletabi5/{id}', 'BoletasController@boletabi5');
+Route::get('views/notas/boleta/{id}', 'BoletasController@boletabi1');
 
 //RUTAS DE MODULO USUARIOS
 Route::resource('usuarios','UsuariosController');
 
 //RUTAS DE MODULO ASISTENCIA
 Route::resource('asistencia','AsistenciaController');
-Route::post('asistencia/list','AsistenciaController@listar');
+Route::get('reporte/{id}','AsistenciaController@rasistencias');
 
 //RUTAS DE MODULO MENSAJERIA
 Route::resource('telegram','MensajeriaController');
-Route::get('/updated-activity', 'TelegramController@updatedActivity');
+Route::get('/webhook', 'TelegramController@webhook');
 
 //RUTAS DE MODULO CARNET
 Route::resource('carnet','CarnetController');

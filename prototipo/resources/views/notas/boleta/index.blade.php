@@ -12,10 +12,7 @@
 			<table class="table table-striped table-bordered table-condensed table-hover">
 				<thead>
 					<th>Nombre</th>
-					<th>Primera Unidad</th>
-					<th>Segunda Unidad</th>
-					<th>Tercera Unidad</th>
-					<th>Cuarta Unidad</th>
+					<th>Boleta</th>
 				</thead>
 
 				@foreach($estudiantes as $est)
@@ -25,23 +22,6 @@
 							<a href="{{URL::action('BoletasController@boletabi1', $est->id)}}">
 								<button class="btn btn-info fa fa-edit"></button>
 							</a>
-						</td>
-						<td>
-							<a href="{{URL::action('BoletasController@boletabi2', $est->id)}}">
-								<button class="btn btn-info fa fa-edit"></button>
-							</a>
-
-						</td>
-						<td>
-							<a href="{{URL::action('BoletasController@boletabi3', $est->id)}}">
-								<button class="btn btn-info fa fa-edit"></button>
-							</a>
-						</td>
-						<td>
-							<a href="{{URL::action('BoletasController@boletabi4', $est->id)}}">
-								<button class="btn btn-info fa fa-edit"></button>
-							</a>
-
 						</td>
 					</tr>
 
